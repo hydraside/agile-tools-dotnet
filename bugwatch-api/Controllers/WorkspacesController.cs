@@ -6,70 +6,70 @@ namespace bugwatch_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TasksController : ControllerBase
+    public class WorkspacesController : ControllerBase
     {
-        private readonly ILogger<TasksController> _logger;
+        private readonly ILogger<WorkspacesController> _logger;
         private readonly ApplicationContext _context;
         
-        public TasksController(ILogger<TasksController> logger, ApplicationContext context)
+        public WorkspacesController(ILogger<WorkspacesController> logger, ApplicationContext context)
         {
             _logger = logger;
             _context = context;
         }
-        // GET: api/tasks/5
+        // GET: api/workspaces/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int Id)
         {
-            AgileTask? agileTask = await _context.AgileTasks.FindAsync(Id);
-            if(agileTask is null)
+            Workspace? workspace = await _context.Workspaces.FindAsync(Id);
+            if(workspace is null)
             {
                 return NotFound();
             }
-            return Ok(agileTask);
+            return Ok(workspace);
         }
-        // GET: api/tasks/
+        // GET: api/workspaces/
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await _context.AgileTasks.ToListAsync());
         }
-        // DELETE: api/tasks/5
+        // DELETE: api/workspaces/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int Id)
         {
-            AgileTask? agileTask = await _context.AgileTasks.FindAsync(Id);
-            if(agileTask is null)
+            Workspace? workspace = await _context.Workspaces.FindAsync(Id);
+            if(workspace is null)
             {
                 return NotFound();
             }
-            _context.Remove(agileTask);
+            _context.Remove(workspace);
             await _context.SaveChangesAsync();
 
-            return Ok(agileTask);
+            return Ok(workspace);
         }
-        // PUT: api/tasks/
+        // PUT: api/workspaces/
         [HttpPut]
-        public async Task<IActionResult> Put(AgileTask agileTask)
+        public async Task<IActionResult> Put(Workspace workspace)
         {
             if(!ModelState.IsValid)
                 return BadRequest();
-            if (_context.AgileTasks.Any(x => x.Id == agileTask.Id))
+            if (_context.AgileTasks.Any(x => x.Id == workspace.Id))
                 return NotFound();
 
-            _context.Update(agileTask);
+            _context.Update(workspace);
             await _context.SaveChangesAsync();
-            return Ok(agileTask);
+            return Ok(workspace);
         }
-        // POST: api/tasks/
+        // POST: api/workspaces/
         [HttpPost]
-        public async Task<IActionResult> Post(AgileTask agileTask)
+        public async Task<IActionResult> Post(Workspace workspace)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            _context.Add(agileTask);
+            _context.Add(workspace);
             await _context.SaveChangesAsync();
-            return Ok(agileTask);
+            return Ok(workspace);
         }
     }
 }
