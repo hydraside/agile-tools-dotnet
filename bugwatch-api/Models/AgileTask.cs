@@ -4,6 +4,7 @@ namespace bugwatch_api.Models
 {
     public class AgileTask
     {
+        [Key]
         public int Id { get; set; }
         [Required]
         [MinLength(3)]

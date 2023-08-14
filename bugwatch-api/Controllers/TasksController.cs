@@ -42,7 +42,7 @@ namespace bugwatch_api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(AgileTask agileTask)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest();
             if (_context.AgileTasks.Any(x => x.Id == agileTask.Id))
                 return NotFound();
@@ -54,7 +54,7 @@ namespace bugwatch_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(AgileTask agileTask)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest();
 
             _context.Add(agileTask);
